@@ -3,6 +3,7 @@ import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
 import { Authenticator } from "@aws-amplify/ui-react";
 import '@aws-amplify/ui-react/styles.css';
+import TodoCreateForm from "@/ui-components/TodoCreateForm";
 
 const client = generateClient<Schema>();
 
@@ -30,20 +31,15 @@ export default function App() {
     <Authenticator>
       {({ signOut, user }) => (
         <main>
-          <h1>My todos</h1>
-          <button onClick={createTodo}>+ new</button>
+          <h1>楽々音声メモ</h1>
+          <p>マイクボタンを押して伝えたいことを話してみてください。話したことが文字で入力されて、伝わりやすい文章に修正されます。</p>
+          <TodoCreateForm />
           <ul>
             {todos.map((todo) => (
               <li key={todo.id}>{todo.content}</li>
             ))}
           </ul>
-          <div>
-            🥳 App successfully hosted. Try creating a new todo.
-            <br />
-            <a href="https://docs.amplify.aws/gen2/start/quickstart/nextjs-pages-router/">
-              Review next steps of this tutorial.
-            </a>
-          </div>
+          <button onClick={signOut}>サインアウト</button>
         </main>
       )}
     </Authenticator>
