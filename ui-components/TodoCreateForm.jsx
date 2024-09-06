@@ -47,6 +47,7 @@ export default function TodoCreateForm(props) {
     return validationResponse;
   };
   const [isListening, setIsListening] = React.useState(false);
+  const [tmpText, setTmpText] = React.useState("");
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
@@ -60,17 +61,19 @@ export default function TodoCreateForm(props) {
       recognition.onresult = (event) => {
         const current = event.resultIndex;
         const transcript = event.results[current][0].transcript;
-        setContent(content + '\n' + transcript);
+        setTmpText(tmpText + '\n' + transcript);
       };
 
       if (isListening) {
         recognition.start();
       } else {
         recognition.stop();
+        setContent(tmpText); 
       }
 
       return () => {
         recognition.stop();
+        setContent(tmpText); 
       };
     }
   }, [isListening]);
